@@ -213,7 +213,9 @@ void GetNextReport(USB_JoystickReport_Input_t* const ReportData) {
 			if (report_count == 75 || report_count == 150)
 			{
 				// Clear the screen
-				ReportData->Button |= SWITCH_MINUS;
+				ReportData->Button |= SWITCH_LCLICK;
+                                // Choose the smaller pencil
+				ReportData->Button |= SWITCH_L;
 			}
 			report_count++;
 			break;
