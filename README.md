@@ -12,7 +12,16 @@ Unlike the Wii U, which handles these controllers on a 'per-game' basis, the Swi
 For my own personal use, I repurposed Switch-Fightstick to output a set sequence of inputs to systematically print Splatoon posts. This works by using the smallest size pen and D-pad inputs to plot out each pixel one-by-one.
 
 #### Printing Procedure
-Just press L to select the pixel pen and plug in the controller: it will automatically sync with the console, reset the cursor position, clean the canvas and print. In case you see issues with controller conflicts while in docked mode, try using a USB-C to USB-A adapter in handheld mode. In dock mode, changes in the HDMI connection will briefly make the Switch not respond to incoming USB commands, skipping pixels in the printout. These changes may include turning off the TV, or switching the HDMI input. (Switching to the internal tuner will be OK, if this doesn't trigger a change in the HDMI input.)
+Once your printer is ready and it has your image loaded, perform these preparation steps before connecting the printer to the console:
+
+1. in Splatoon 2 or 3, go to the red post in the square and select that you want to post
+1. clear the canvas
+ * Splatoon 2: Minus key
+ * Splatoon 3: Left joystick click
+1. press L to select the smallest pixel pen
+1. plug in the printer (the Teensy or Arduino board with your image to print)
+
+At this point, it will automatically sync as a controller with the console, reset the cursor position and start printing your post. Printing with the Nintendo Switch in docked mode is discouraged because it can fail to sync the controller and start printing. Also in docked mode, changes in the HDMI connection will briefly make the Switch not respond to incoming USB commands, skipping pixels in the printout. These changes may include turning off the TV, or switching the HDMI input.
 
 Each line is printed top to bottom, alternating from left to right and viceversa. Printing currently takes about half an hour.
 
