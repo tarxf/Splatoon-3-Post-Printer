@@ -11,8 +11,11 @@
 
 # Run "make help" for target help.
 
-# Set the MCU accordingly to your device (e.g. at90usb1286 for a Teensy 2.0++, or atmega16u2 for an Arduino UNO R3)
-MCU          = at90usb1286
+MCU_TEENSY   = at90usb1286
+MCU_UNO      = atmega16u2
+MCU_MICRO    = atmega32u4
+# set the Teensy controller as default.
+MCU         ?= $(MCU_TEENSY)
 ARCH         = AVR8
 F_CPU        = 16000000
 F_USB        = $(F_CPU)
@@ -40,3 +43,10 @@ include $(LUFA_PATH)/Build/lufa_atprogram.mk
 # Target for LED/buzzer to alert when print is done
 with-alert: all
 with-alert: CC_FLAGS += -DALERT_WHEN_DONE
+
+teensy:
+	MCU=$(MCU_TEENSY) make all
+uno:
+	MCU=$(MCU_UNO) make all
+micro:
+	MCU=$(MCU_MICRO) make all
