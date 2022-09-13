@@ -25,9 +25,11 @@ SRC          = $(TARGET).c Descriptors.c image.c $(LUFA_SRC_USB)
 LUFA_PATH    = ../LUFA/LUFA
 CC_FLAGS     = -DUSE_LUFA_CONFIG_HEADER -IConfig/
 LD_FLAGS     =
+IMG_SRC_DEF  = splatoonpattern.png
+IMG_SRC     ?= post.png
 
 # Default target
-all:
+all: image
 
 # Include LUFA build script makefiles
 include $(LUFA_PATH)/Build/lufa_core.mk
@@ -50,3 +52,10 @@ uno:
 	MCU=$(MCU_UNO) make all
 micro:
 	MCU=$(MCU_MICRO) make all
+
+image: $(IMG_SRC)
+	python png2c.py $(IMG_SRC)
+
+$(IMG_SRC):
+	@echo "using default image source"
+	cp $(IMG_SRC_DEF) $(IMG_SRC)
