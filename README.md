@@ -1,12 +1,23 @@
-## Switch-Fightstick
-Proof-of-Concept Fightstick for the Nintendo Switch
+Hello chum and welcome to the Splatoon 3 Post Printer guide. First things first, this printer is based on the work of the original contributors shinyquagsire23 and progmem, if you are interested in learning how _they_ did it, follow the forks of this repository and check their README's.
 
-Uses the LUFA library and reverse-engineering of the Pokken Tournament Pro Pad for the Wii U to enable custom fightsticks on the Switch System v3.0.0
+By the end of this guide, you should be able to print your own images in the Splatoon 3 Post and share it to the world. Isn't that great?
 
-### Wait, what?
-On June 20, 2017, Nintendo released System Update v3.0.0 for the Nintendo Switch. Along with a number of additional features that were advertised or noted in the changelog, additional hidden features were added. One of those features allows for the use of compatible USB controllers on the Nintendo Switch, such as the Pokken Tournament Pro Pad.
+## Requirements
 
-Unlike the Wii U, which handles these controllers on a 'per-game' basis, the Switch treats the Pokken controller as if it was a Switch Pro Controller. Along with having the icon for the Pro Controller, it functions just like it in terms of using it in other games, apart from the lack of physical controls such as analog sticks, the buttons for the stick clicks, or other system buttons such as Home or Capture.
+Now please read carefully the expectations of this guide, you will need to gather the following hardware to get the printer going:
+
+1. **A computer** will be necessary to create the software that runs the printer with your image embedded. This guide has instructions for either: 
+   * Windows 10, or
+   * Mac OSX, or
+   * Linux (Fedora or ubuntu were tested)
+1. **A USB development board** to work as a controller that automatically prints the post when connected to your Switch console. Select one from the following tested options:
+   * Arduino micro, or
+   * Arduino Uno, or
+   * Teensy 2.0++
+1. **A USB-B cable** to plug it to the dev board
+1. **A USB-C adapter** to plug the dev board to the Nintendo Switch. This won't be necessary if your USB-B cable is a USB-C connector on the other end of the cable.
+
+TODO: HERE
 
 ### Printing Splatoon Posts
 For my own personal use, I repurposed Switch-Fightstick to output a set sequence of inputs to systematically print Splatoon posts. This works by using the smallest size pen and D-pad inputs to plot out each pixel one-by-one.
