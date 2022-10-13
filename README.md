@@ -19,6 +19,23 @@ Now please read carefully the expectations of this guide, you will need to gathe
 
 TODO: HERE
 
+##OSX setup
+
+1. make a folder in your computer to hold this repo and other dependencies you will download later. I'll use sp3-print.
+1. cd sp3-print and git clone this repository
+1. install the AVR libraries and tools by running:
+   * brew install crosspack-avr
+1. get the LUFA pack, extract and rename it to LUFA, your sp3-print folder should have 2 dirs: this repo and LUFA.
+1. make sure [python3 is installed](https://www.python.org/downloads/macos/)
+   * pip3 install Pillow
+1. cd Splatoon-3-Post-Printer
+1. execute the make command 
+1. download and install the [arduino IDE](https://www.arduino.cc/en/software)
+1. start the Arduino IDE and enable the checkbox for Show verbose output during: upload.
+1. plugin your arduino board to the computer and [select the board and port](https://support.arduino.cc/hc/en-us/articles/4406856349970-Select-board-and-port-in-Arduino-IDE) where the arduino is connected. Make a note of the port as it will be required later.
+1. 
+
+
 ### Printing Splatoon Posts
 For my own personal use, I repurposed Switch-Fightstick to output a set sequence of inputs to systematically print Splatoon posts. This works by using the smallest size pen and D-pad inputs to plot out each pixel one-by-one.
 
