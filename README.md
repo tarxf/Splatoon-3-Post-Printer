@@ -50,6 +50,8 @@ You only require to execute these instructions once in your computer. When you g
    
    You should see a small image coming up in a preview window and that means that python and PIL were correctly installed.
 
+1. Install cygwin
+
 TODO: HERE
 
 1. download and install the [arduino IDE](https://www.arduino.cc/en/software)
