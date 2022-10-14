@@ -1,10 +1,15 @@
-Hello chum and welcome to the Splatoon 3 Post Printer guide. First things first, this printer is based on the work of the original contributors shinyquagsire23 and progmem, if you are interested in learning how _they_ did it, follow the forks of this repository and check their README's.
+Hello chum, welcome to the Splatoon 3 Post Printer guide. First things first, this printer is based on the work of the original contributors shinyquagsire23 and progmem, if you are interested in learning how _they_ did it, follow the forks of this repository and check their README's.
 
-By the end of this guide, you should be able to print your own images in the Splatoon 3 Post and share it to the world. Isn't that great?
+By the end of this guide, you should be able to print your own images in the Splatoon 3 Post and share it to the world. Isn't that great? The Splatoon3 printer is a program that runs in a USB maker board and contains an image that is printed to the Splatoon Post by registering itself as a controller to the switch. When the program starts, it resets the position to the upper left corner and it starts moving across the canvas horizontally until the end of the line is reached. Wherever a dot exists in the image that was provided, the printer will hit the A button to print that same dot in the specified position. the printer will continue to the next line and will finish until all the canvas has been traversed.
+
+Here you can see a sample post from Splatoon 2 that shinyquagsire23 authored and printed.
+
+![http://i.imgur.com/93B1Usb.jpg](http://i.imgur.com/93B1Usb.jpg)
+*image via [/u/Stofers](https://www.reddit.com/user/Stofers)*
 
 ## Requirements
 
-Now please read carefully the expectations of this guide, you will need to gather the following hardware to get the printer going:
+Please read carefully the expectations of this guide, you will need to gather the following hardware to get your printer going:
 
 1. **A computer** will be necessary to create the software that runs the printer with your image embedded. This guide has instructions for either: 
    * Windows 10, or
@@ -14,39 +19,92 @@ Now please read carefully the expectations of this guide, you will need to gathe
    * Arduino micro, or
    * Arduino Uno, or
    * Teensy 2.0++
-1. **A USB-B cable** to plug it to the dev board
-1. **A USB-C adapter** to plug the dev board to the Nintendo Switch. This won't be necessary if your USB-B cable is a USB-C connector on the other end of the cable.
+1. **A USB-B cable** to plug it to the dev board.
+1. **A USB-C adapter** to plug the dev board to the Nintendo Switch.
 
-TODO: HERE
+## Computer One-time Setup
 
-##OSX setup
+You only require to execute these instructions once in your computer. When you get the printer working, you will not need to do this every time. To change the image flashed into the board, refer to the Image Flashing section below.
+   
+1. if you don't have brew installed in your OSX, get it first from the [brew website](https://brew.sh/) and install the AVR libraries and tools by running this command line in the OSX terminal:
 
-1. make a folder in your computer to hold this repo and other dependencies you will download later. I'll use sp3-print.
-1. cd sp3-print and git clone this repository
-1. install the AVR libraries and tools by running:
-   * brew install crosspack-avr
-1. get the LUFA pack, extract and rename it to LUFA, your sp3-print folder should have 2 dirs: this repo and LUFA.
-1. make sure [python3 is installed](https://www.python.org/downloads/macos/)
-   * pip3 install Pillow
-1. cd Splatoon-3-Post-Printer
-1. execute the make command 
+   ```brew install crosspack-avr```
+   
+1. make a folder in your computer to hold this repo and other dependencies you will download later. I suggest opening a terminal and creating it in the home directory like this:
+
+   ```mkdir sp3-print```
+   
+1. git clone this repository into the sp3-print dir, you can use the terminal to do it like this:
+
+   ```cd sp3-print```
+   ```git clone https://github.com/tarxf/Splatoon-3-Post-Printer.git```
+   
+1. get the LUFA library from github by running this:
+
+   ```git clone https://github.com/abcminiuser/lufa.git LUFA```
+
+1. make sure [python3 is installed](https://www.python.org/downloads/macos/) because you will need the Pillow imaging library. The command to install it is:
+
+   ```pip3 install Pillow```
+   
 1. download and install the [arduino IDE](https://www.arduino.cc/en/software)
 1. start the Arduino IDE and enable the checkbox for Show verbose output during: upload.
 1. plugin your arduino board to the computer and [select the board and port](https://support.arduino.cc/hc/en-us/articles/4406856349970-Select-board-and-port-in-Arduino-IDE) where the arduino is connected. Make a note of the port as it will be required later.
-1. 
 
+### Image Flashing
 
-### Printing Splatoon Posts
-For my own personal use, I repurposed Switch-Fightstick to output a set sequence of inputs to systematically print Splatoon posts. This works by using the smallest size pen and D-pad inputs to plot out each pixel one-by-one.
+Your computer should be ready to create a file that the board understands, that is the hex (as in hexadecimal) file. Managing hex files should have a splatoon badge, don't you think? Okay, the hex contains 2 important parts: the printer and the image. Let's get this file ready for the board!
 
-#### Printing Procedure
-Just press L to select the pixel pen and plug in the controller: it will automatically sync with the console, reset the cursor position, clean the canvas and print. In case you see issues with controller conflicts while in docked mode, try using a USB-C to USB-A adapter in handheld mode. In dock mode, changes in the HDMI connection will briefly make the Switch not respond to incoming USB commands, skipping pixels in the printout. These changes may include turning off the TV, or switching the HDMI input. (Switching to the internal tuner will be OK, if this doesn't trigger a change in the HDMI input.)
+#### Image Requirements and Guidelines
+
+##### Image Size Requirement
+An image size of 320 x 120 pixels is the only hard requirement for the image you are about to prepare for the printing. If your image supplied is of a different size, the process will throw an error and will not continue.
+a. Size: 320 x 120 pixels
+
+##### Image Guidelines
+What makes a good looking image to print? 
+
+1. **A black and white image**. Because the image will be transformed to black and white during the process, the best results are obtained with an image source that is already black and white, even with grayscale you will have tangible differences in the output.
+1. **pixel editor**. Can you use an image pixel editor for your content? This way you will control exactly how your image looks. Text and geometric shapes are best drawn this way.
+1. **high contrast picture**. One of the nice things about automated printing is to grab any image and put it through the printer. The images that work best are the ones that include high contrast in the colors used. [This is one example](https://twitter.com/benskt_t/status/1569740935369719809).
+1. **preview your image prior flashing**. Before putting your board to print the post, you can preview your image in the computer by running the following command: ```python3 png2c.py -p <yourimage.png>``` just replace yourimage.png for the actual filename. jpg and jpeg are also valid file formats here.
+
+#### Image Flashing Procedure
+1. place your post.png image in the Splatoon-3-Post-Printer folder. Remember that the size has to be 320x120p.
+1. in the terminal, go to the Splatoon-3-Post-Printer folder and execute the make command for your board. For example, to prepare the printer and the image for the arduino micro, the following needs to be executed:
+   
+   ```cd ~/sp3-print/Splatoon3-Post-Printer```
+   ```make micro```
+   
+The other options for the make command are ```teensy``` for the Teensy 2.0++ and ```uno``` for the arduino uno. A new file with a hex extension should be created and now we need to transfer it to the board. This is a time-sensitive two-step process, but nothing to be afraid of. Make sure to read this instruction until the end of the section before executing. 
+
+1. with your board connected to the computer, press the reset button in the board and in less than 7 seconds, run the command below.
+
+   ```./avrdude-flash```
+
+Note: this process can be repeated if the time window is missed. It is recommended to have the line already written in the terminal when pressing the reset button to avoid delays. If you press reset and execute the line immediately (less than 1 sec), the command can fail. This command will not work without pressing reset.
+
+If no error was shown in the terminal, you can disconnect your board from the computer and get ready to print on the Switch.
+
+## Printing Splatoon Posts
+Once you have executed the image flashing procedure, you need to get to your Nintendo Switch and do the following:
+
+1. Fire up Splatoon 3, in the Square locate the post and press the draw button.
+1. Plugin your board to the Nintendo Switch in the USBC port.
+1. Wait for it :) it should reset the canvas, choose the smaller dot tool and navigate to the upper left corner of the canvas to start printing.
+
+Notes: make sure to not touch the controllers or the screen during the printing as the process could be affected. Should that happen, press the reset button on the board to restart the process. Sometimes the dot is not so visible, so the volume is a good way to hear the printer working as it emits a sound when printing black dots. Make sure to have the Nintendo Switch charged as it takes some time to print (half-hour maybe). The printer works best with the switch undocked.
+
+### While you Wait
+The printer works by using the smallest size pen and D-pad inputs to plot out each pixel one-by-one. When connected, it will automatically sync with the console, reset the cursor position, clean the canvas and print. In case you see issues with controller conflicts while in docked mode, try using a USB-C to USB-A adapter in handheld mode. In dock mode, changes in the HDMI connection will briefly make the Switch not respond to incoming USB commands, skipping pixels in the printout. These changes may include turning off the TV, or switching the HDMI input. (Switching to the internal tuner will be OK, if this doesn't trigger a change in the HDMI input.)
 
 Each line is printed top to bottom, alternating from left to right and viceversa. Printing currently takes about half an hour.
 
 Optionally, upon completion, the Teensy's LED will begin flashing. On compatible Arduino boards, some combination of the onboard LEDs will flash. On the UNO, for instance, both TX and RX LEDs will flash, however the other LEDs will not. If this functionality is desired, issue `make with-alert` when building the firmware. All pins on both PORTB and PORTD are toggled! Beware of possible interactions with any attached peripherals, say from another project.
 
 This repository has been tested using a Teensy 2.0++, Arduino UNO R3, and Arduino Micro.
+
+TODO: HERE
 
 #### Compiling and Flashing onto the Teensy 2.0++
 Go to the Teensy website and download/install the [Teensy Loader application](https://www.pjrc.com/teensy/loader.html). For Linux, follow their instructions for installing the [GCC Compiler and Tools](https://www.pjrc.com/teensy/gcc.html). For Windows, you will need the [latest AVR toolchain](http://www.atmel.com/tools/atmelavrtoolchainforwindows.aspx) from the Atmel site. See [this issue](https://github.com/LightningStalker/Splatmeme-Printer/issues/10) and [this thread](http://gbatemp.net/threads/how-to-use-shinyquagsires-splatoon-2-post-printer.479497/) on GBAtemp for more information. (Note for Mac users - the AVR MacPack is now called AVR CrossPack. If that does not work, you can try installing `avr-gcc` with `brew`.)
@@ -117,10 +175,9 @@ To save the bilevel image:
 ```
 $ python png2c.py -s yourImage.png
 ```
-
 ![http://imgur.com/uUOeJ7P.png](http://imgur.com/uUOeJ7P.png)
-
 *image via [vjapolitzer](https://github.com/vjapolitzer)*
+
 
 Looks good! Time to get printing.
 
