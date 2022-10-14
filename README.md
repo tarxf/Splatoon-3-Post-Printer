@@ -26,27 +26,32 @@ Please read carefully the expectations of this guide, you will need to gather th
 
 You only require to execute these instructions once in your computer. When you get the printer working, you will not need to do this every time. To change the image flashed into the board, refer to the Image Flashing section below.
    
-1. if you don't have brew installed in your OSX, get it first from the [brew website](https://brew.sh/) and install the AVR libraries and tools by running this command line in the OSX terminal:
-
-   ```brew install crosspack-avr```
+1. Install the AVR development tools. Follow [this link](https://www.pjrc.com/teensy/gcc.html) where you'll find installers for Windows, Mac and Ubuntu.
    
-1. make a folder in your computer to hold this repo and other dependencies you will download later. I suggest opening a terminal and creating it in the home directory like this:
-
-   ```mkdir sp3-print```
+1. make a folder in your computer to hold this repo and other dependencies you will download later. I will name it ```sp3-print``` and I will reference it through the rest of the guide.
    
-1. git clone this repository into the sp3-print dir, you can use the terminal to do it like this:
-
-   ```cd sp3-print```
-   ```git clone https://github.com/tarxf/Splatoon-3-Post-Printer.git```
+1. download and extract this github repository into the sp3-print dir. If you download via the Zip file, make sure that upon extraction, there is not an extra folder generated. i.e. sp3-print/**Splatoon-3-Post-Printer**/Splatoon-3-Post-Printer/. You can avoid that by extracting directly to sp3-print instead of extracting to Splatoon-3-Post-Printer which is the default way this is packaged. *Thanks github, that was super weird.*
    
-1. get the LUFA library from github by running this:
+1. download and extract the [LUFA library](https://github.com/abcminiuser/lufa) github repository into the sp3-print dir. Rename the extracted folder to ```LUFA```
 
-   ```git clone https://github.com/abcminiuser/lufa.git LUFA```
+1. make sure [python3 is installed](https://www.python.org/downloads/). The easiest way to figure if you already have it is to open a terminal and type ```python3 --version```
 
-1. make sure [python3 is installed](https://www.python.org/downloads/macos/) because you will need the Pillow imaging library. The command to install it is:
+1. next, you'll get the Pillow imaging library. the command line to install it is:
 
-   ```pip3 install Pillow```
+   ```python3 -m pip install --upgrade pip```
    
+   ```python3 -m pip install --upgrade Pillow```
+   
+   We can verify that python and PIL work by previewing the default post image with _either_ of these steps:
+   
+   * double click the *checkmypillow* file in the Splatoon-3-Post-Printer folder, 
+     OR
+   * Execute ```python3 png2c.py -p splatoonpost.png```
+   
+   You should see a small image coming up in a preview window and that means that python and PIL were correctly installed.
+
+TODO: HERE
+
 1. download and install the [arduino IDE](https://www.arduino.cc/en/software)
 1. start the Arduino IDE and enable the checkbox for Show verbose output during: upload.
 1. plugin your arduino board to the computer and [select the board and port](https://support.arduino.cc/hc/en-us/articles/4406856349970-Select-board-and-port-in-Arduino-IDE) where the arduino is connected. Make a note of the port as it will be required later.
@@ -104,7 +109,6 @@ Optionally, upon completion, the Teensy's LED will begin flashing. On compatible
 
 This repository has been tested using a Teensy 2.0++, Arduino UNO R3, and Arduino Micro.
 
-TODO: HERE
 
 #### Compiling and Flashing onto the Teensy 2.0++
 Go to the Teensy website and download/install the [Teensy Loader application](https://www.pjrc.com/teensy/loader.html). For Linux, follow their instructions for installing the [GCC Compiler and Tools](https://www.pjrc.com/teensy/gcc.html). For Windows, you will need the [latest AVR toolchain](http://www.atmel.com/tools/atmelavrtoolchainforwindows.aspx) from the Atmel site. See [this issue](https://github.com/LightningStalker/Splatmeme-Printer/issues/10) and [this thread](http://gbatemp.net/threads/how-to-use-shinyquagsires-splatoon-2-post-printer.479497/) on GBAtemp for more information. (Note for Mac users - the AVR MacPack is now called AVR CrossPack. If that does not work, you can try installing `avr-gcc` with `brew`.)
