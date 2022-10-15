@@ -87,9 +87,9 @@ A new file with a hex extension should be created and now we need to transfer it
 
 1. with your board connected to the computer, press the reset button in the board and in less than 7 seconds do the following:
   
-  * Linux/Mac: run the terminal command
+  * Mac: run the terminal command
   
-   ```./avrdude-flash```
+   ```./osx-avrdude-flash```
   
   * Windows: Right click on the winavrdude-flash.bat and execute as administrator 
 

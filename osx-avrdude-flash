@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+TTYPORT=`ls -d /dev/*|grep tty.usb`
+SP3_PRINTER="Joystick.hex"
+AR_MICRO_FLAGS="-patmega32u4 -cavr109"
+BOARDFLAGS=${AR_MICRO_FLAGS}
+
+avrdude -v -V ${BOARDFLAGS} -P${TTYPORT} -D "-Uflash:w:${SP3_PRINTER}:i"
