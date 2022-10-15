@@ -53,7 +53,7 @@ You only require to execute these instructions once in your computer. When you g
 1. download and install [cygwin](https://cygwin.com/install.html) which will be used to compile the printer and the image. The installer is a bit intimidating because it asks for a lot of options but I managed to get it working by not changing anything and hitting next until it asked me no more. That's windows installers in a nutshell, chums.
 
 1. download and install the [arduino IDE](https://www.arduino.cc/en/software). It will ask for drivers to be installed and you have to follow through with those otherwise your computer will not be able to communicate with the board.
-1. start the Arduino IDE and plug in your arduino board to the computer and [select the board and port](https://support.arduino.cc/hc/en-us/articles/4406856349970-Select-board-and-port-in-Arduino-IDE) where the arduino is connected. Make a note of the port as it will be required later.
+1. start the Arduino IDE and plug in your arduino board to the computer and [select the board and port](https://support.arduino.cc/hc/en-us/articles/4406856349970-Select-board-and-port-in-Arduino-IDE) where the arduino is connected. Make a note of the port as it will be required later. If your board is not connecting to the Arduino IDE, check these [troubleshooting instructions](https://support.arduino.cc/hc/en-us/articles/4412955149586-If-your-board-does-not-appear-in-the-port-menu).
 
 ### Image Flashing
 
@@ -75,18 +75,25 @@ What makes a good looking image to print?
 
 #### Image Flashing Procedure
 1. place your post.png image in the Splatoon-3-Post-Printer folder. Remember that the size has to be 320x120p.
-1. in the terminal, go to the Splatoon-3-Post-Printer folder and execute the make command for your board. For example, to prepare the printer and the image for the arduino micro, the following needs to be executed:
-   
-   ```cd ~/sp3-print/Splatoon3-Post-Printer```
+1. Windows only: start the cygwin terminal and navigate to the Splatoon-3-Post-Printer folder. For reference, your user folder in cygwin starts in ** /cygdrive/Users/<youruser>/**
+1. Mac/Linux: in the terminal, go to the Splatoon-3-Post-Printer folder 
+1. execute the make command for your board. For example, to prepare the printer and the image for the arduino micro, the following line works:
+      
    ```make micro```
    
-The other options for the make command are ```teensy``` for the Teensy 2.0++ and ```uno``` for the arduino uno. A new file with a hex extension should be created and now we need to transfer it to the board. This is a time-sensitive two-step process, but nothing to be afraid of. Make sure to read this instruction until the end of the section before executing. 
+The other options for the make command are ```teensy``` for the Teensy 2.0++ and ```uno``` for the arduino uno. 
+  
+A new file with a hex extension should be created and now we need to transfer it to the board. This is a time-sensitive two-step process, but I'm sure you'll get the hang of it. Please make sure to read this instruction until the end of the section before executing it. 
 
-1. with your board connected to the computer, press the reset button in the board and in less than 7 seconds, run the command below.
-
+1. with your board connected to the computer, press the reset button in the board and in less than 7 seconds do the following:
+  
+  * Linux/Mac: run the terminal command
+  
    ```./avrdude-flash```
+  
+  * Windows: Right click on the winavrdude-flash.bat and execute as administrator 
 
-Note: this process can be repeated if the time window is missed. It is recommended to have the line already written in the terminal when pressing the reset button to avoid delays. If you press reset and execute the line immediately (less than 1 sec), the command can fail. This command will not work without pressing reset.
+Note: this process can be repeated if the time window is missed. Mac/Linux: It is recommended to have the line already written in the terminal when pressing the reset button to avoid delays. If you press reset and execute the line immediately (less than 1 sec), the command can fail.
 
 If no error was shown in the terminal, you can disconnect your board from the computer and get ready to print on the Switch.
 
@@ -107,30 +114,6 @@ Each line is printed top to bottom, alternating from left to right and viceversa
 Optionally, upon completion, the Teensy's LED will begin flashing. On compatible Arduino boards, some combination of the onboard LEDs will flash. On the UNO, for instance, both TX and RX LEDs will flash, however the other LEDs will not. If this functionality is desired, issue `make with-alert` when building the firmware. All pins on both PORTB and PORTD are toggled! Beware of possible interactions with any attached peripherals, say from another project.
 
 This repository has been tested using a Teensy 2.0++, Arduino UNO R3, and Arduino Micro.
-
-
-#### Compiling and Flashing onto the Teensy 2.0++
-Go to the Teensy website and download/install the [Teensy Loader application](https://www.pjrc.com/teensy/loader.html). For Linux, follow their instructions for installing the [GCC Compiler and Tools](https://www.pjrc.com/teensy/gcc.html). For Windows, you will need the [latest AVR toolchain](http://www.atmel.com/tools/atmelavrtoolchainforwindows.aspx) from the Atmel site. See [this issue](https://github.com/LightningStalker/Splatmeme-Printer/issues/10) and [this thread](http://gbatemp.net/threads/how-to-use-shinyquagsires-splatoon-2-post-printer.479497/) on GBAtemp for more information. (Note for Mac users - the AVR MacPack is now called AVR CrossPack. If that does not work, you can try installing `avr-gcc` with `brew`.)
-
-Next, you need to grab the LUFA library. You can download it in a zipped folder at the bottom of [this page](http://www.fourwalledcubicle.com/LUFA.php). Unzip the folder, rename it `LUFA`, and place it where you like. Then, download or clone the contents of this repository onto your computer. Next, you'll need to make sure the `LUFA_PATH` inside of the `makefile` points to the `LUFA` subdirectory inside your `LUFA` directory. My `Switch-Fightstick` directory is in the same directory as my `LUFA` directory, so I set `LUFA_PATH = ../LUFA/LUFA`.
-
-Now you should be ready to rock. Open a terminal window in the `Switch-Fightstick` directory, type `make`, and hit enter to compile. If all goes well, the printout in the terminal will let you know it finished the build! Follow the directions on flashing `Joystick.hex` onto your Teensy, which can be found page where you downloaded the Teensy Loader application.
-
-#### Compiling and Flashing onto the Arduino UNO R3
-You will need to set your [Arduino in DFU mode](https://www.arduino.cc/en/Hacking/DFUProgramming8U2), and flash its USB controller. (Note for Mac users - try [brew](https://brew.sh/index_it.html) to install the dfu-programmer with `brew install dfu-programmer`.) Setting an Arduino UNO R3 in DFU mode is quite easy, all you need is a jumper (the boards come with the needed pins in place). Please note that once the board is flashed, you will need to flash it back with the original firmware to make it work again as a standard Arduino. To compile this project you will need the AVR GCC Compiler and Tools. (Again for Mac users - try brew, adding the [osx-cross/avr](osx-cross/avr) repository, all you need to do is to type `brew tap osx-cross/avr` and `brew install avr-gcc`.) Next, you need to grab the LUFA library: download and install it following the steps described for the Teensy 2.0++.
-
-Finally, open a terminal window in the `Switch-Fightstick` directory and compile by typing `make uno`. Follow the [DFU mode directions](https://www.arduino.cc/en/Hacking/DFUProgramming8U2) to flash `Joystick.hex` onto your Arduino UNO R3 and you are done.
-
-#### Compiling and Flashing onto the Arduino Micro
-The Arduino Micro is more like the Teensy in that it has a single microcontroller that communicates directly over USB. Most of the steps are the same as those for the Teensy, except do not download Teensy Loader program. The make command changes to `make micro` in order to build it for your board.
-
-Once finished building, start up Arduino IDE. Under `File -> Preferences`, check `Show verbose output during: upload` and pick OK. With the Arduino plugged in and properly selected under `Tools`, upload any sketch. Find the line with `avrdude` and copy the entire `avrdude` command and all options into a terminal, replacing the `.hex` file and path to the location of the `Joystick.hex` created in the previous step. Also make sure the `-P/dev/??` port is the same as what Arduino IDE is currently reporting. Now double tap the reset button on the Arduino and quickly press Enter in the terminal. This may take several tries. You may need to press Enter first and then the reset button or try various timings. Eventually, `avrdude` should report success. Store the `avrdude` command in a text file or somewhere safe since you will need it every time you want to print a new image.
-
-Sometimes, the Arduino will show up under a different port, so you may need to run Arduino IDE again to see the current port of your Micro.
-
-If you ever need to use your Arduino Micro with Arduino IDE again, the process is somewhat similar. Upload your sketch in the usual way and double tap reset button on the Arduino. It may take several tries and various timings, but should eventually be successful.
-
-The Arduino Leonardo is theoretically compatible, but has not been tested. It also has the ATmega32u4, and is layed out somewhat similar to the Micro.
 
 #### Attaching the optional buzzer
 A suitable 5V buzzer may be attached to any of the available pins on PORTB or PORTD. When compiled with `make with-alert`, it will begin sounding once printing has finished. See above warning about PORTB and PORTD. Reference section 31 of [the AT90USB1286 datasheet](http://www.atmel.com/images/doc7593.pdf) for maximum current specs.
@@ -180,10 +163,3 @@ $ python png2c.py -s yourImage.png
 ```
 ![http://imgur.com/uUOeJ7P.png](http://imgur.com/uUOeJ7P.png)
 *image via [vjapolitzer](https://github.com/vjapolitzer)*
-
-
-Looks good! Time to get printing.
-
-### Sample
-![http://i.imgur.com/93B1Usb.jpg](http://i.imgur.com/93B1Usb.jpg)
-*image via [/u/Stofers](https://www.reddit.com/user/Stofers)*
