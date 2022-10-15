@@ -27,6 +27,7 @@ CC_FLAGS     = -DUSE_LUFA_CONFIG_HEADER -IConfig/
 LD_FLAGS     =
 IMG_SRC_DEF  = splatoonpattern.png
 IMG_SRC     ?= post.png
+PYTHON3      = /usr/bin/env python3
 
 # Default target
 all: image
@@ -54,8 +55,11 @@ micro:
 	MCU=$(MCU_MICRO) make all
 
 image: $(IMG_SRC)
-	python png2c.py $(IMG_SRC)
+	$(PYTHON3) png2c.py $(IMG_SRC)
 
 $(IMG_SRC):
 	@echo "using default image source"
 	cp $(IMG_SRC_DEF) $(IMG_SRC)
+
+image-preview: $(IMG_SRC)
+	$(PYTHON3) png2c.py -p $(IMG_SRC)
