@@ -30,7 +30,7 @@ You only require to execute these instructions once in your computer. When you g
    
 1. make a folder in your computer to hold this repo and other dependencies you will download later. I will name it ```sp3-print``` and I will reference it through the rest of the guide.
    
-1. download and extract this github repository into the sp3-print dir. If you download via the Zip file, make sure that upon extraction, there is not an extra folder generated. i.e. sp3-print/**Splatoon-3-Post-Printer**/Splatoon-3-Post-Printer/. You can avoid that by extracting directly to sp3-print instead of extracting to Splatoon-3-Post-Printer which is the default way this is packaged. *Thanks github, that was super weird.*
+1. download and extract this github repository into the sp3-print dir. If you download via the Zip file, make sure that upon extraction, there is not an extra folder generated. i.e. sp3-print/**Splatoon-3-Post-Printer**/Splatoon-3-Post-Printer/. You can avoid that by extracting directly to sp3-print instead of extracting to Splatoon-3-Post-Printer which is the default way this is packaged.
    
 1. download and extract the [LUFA library](https://github.com/abcminiuser/lufa) github repository into the sp3-print dir. Rename the extracted folder to ```LUFA```
 
