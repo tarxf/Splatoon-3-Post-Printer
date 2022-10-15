@@ -34,7 +34,7 @@ You only require to execute these instructions once in your computer. When you g
    
 1. download and extract the [LUFA library](https://github.com/abcminiuser/lufa) github repository into the sp3-print dir. Rename the extracted folder to ```LUFA```
 
-1. make sure [python3 is installed](https://www.python.org/downloads/). The easiest way to figure if you already have it is to open a terminal and type ```python3 --version```
+1. make sure [python3 is installed](https://www.python.org/downloads/). The easiest way to figure if you already have it is to open a terminal and type ```python3 --version```, if it yields an error then you must install it.
 
 1. next, you'll get the Pillow imaging library. the command line to install it is:
 
@@ -50,13 +50,10 @@ You only require to execute these instructions once in your computer. When you g
    
    You should see a small image coming up in a preview window and that means that python and PIL were correctly installed.
 
-1. Install cygwin
+1. download and install [cygwin](https://cygwin.com/install.html) which will be used to compile the printer and the image. The installer is a bit intimidating because it asks for a lot of options but I managed to get it working by not changing anything and hitting next until it asked me no more. That's windows installers in a nutshell, chums.
 
-TODO: HERE
-
-1. download and install the [arduino IDE](https://www.arduino.cc/en/software)
-1. start the Arduino IDE and enable the checkbox for Show verbose output during: upload.
-1. plugin your arduino board to the computer and [select the board and port](https://support.arduino.cc/hc/en-us/articles/4406856349970-Select-board-and-port-in-Arduino-IDE) where the arduino is connected. Make a note of the port as it will be required later.
+1. download and install the [arduino IDE](https://www.arduino.cc/en/software). It will ask for drivers to be installed and you have to follow through with those otherwise your computer will not be able to communicate with the board.
+1. start the Arduino IDE and plug in your arduino board to the computer and [select the board and port](https://support.arduino.cc/hc/en-us/articles/4406856349970-Select-board-and-port-in-Arduino-IDE) where the arduino is connected. Make a note of the port as it will be required later.
 
 ### Image Flashing
 
