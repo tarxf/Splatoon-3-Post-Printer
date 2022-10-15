@@ -23,7 +23,7 @@ def main(argv):
   im = Image.open(args[0])                # import 320x120 png
   if not (im.size[0] == 320 and im.size[1] == 120):
     print("ERROR: Image must be 320px by 120px!")
-    sys.exit()
+    sys.exit(1)
 
   im = im.convert("1")                    # convert to bilevel image
                                           # dithering if necessary
